@@ -1,0 +1,4 @@
+polars==0.20.31
+plotly==5.19.0
+matplotlib==3.7.2
+statsmodels==0.14.0
