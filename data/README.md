@@ -1,8 +1,8 @@
-# ZKSync Dataset
+# ZKsync Dataset
 
-The ZKSync dataset provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKSync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKSync data.
+The ZKsync dataset provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKsync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKsync data.
 
-This dataset provides a rich source of data for analyzing the ZKSync network and its transaction dynamics.
+This dataset provides a rich source of data for analyzing the ZKsync network and its transaction dynamics.
 
 ## Data Description
 
@@ -14,7 +14,7 @@ The dataset is stored in Parquet format, organized into multiple subfiles:
 - **Logs:** 298 files
 - **L2 to L1 logs:** 298 files
 
-These files are structured to facilitate processing on local machines, such as laptops. Python scripts are provided for data download, along with [Jupyter notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks) for quick exploration and analysis. The dataset aims to support in-depth analysis of the ZKSync network and its transactions.
+These files are structured to facilitate processing on local machines, such as laptops. Python scripts are provided for data download, along with [Jupyter notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks) for quick exploration and analysis. The dataset aims to support in-depth analysis of the ZKsync network and its transactions.
 
 ## Usage Recommendations
 
@@ -39,13 +39,13 @@ For loading and processing the data, we recommend using the [Polars](https://git
 
 Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain transaction information, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
 
-We list the attributes of the blocks in the ZKSync dataset below:
+We list the attributes of the blocks in the ZKsync dataset below:
 
 | Attribute         | Type          | Description                                                                                           |
 |-------------------|---------------|-------------------------------------------------------------------------------------------------------|
 | hash              | str           | Unique identifier for the block.                                                                      |
 | parentHash        | str           | Unique identifier of the parent block.                                                                |
-| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. In ZKSync it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
+| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. In ZKsync it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
 | miner             | str           | Address of the miner who mined the block. This is set as Null address (`0x0`) in all ZKsync blocks since it does not have miners or block validators.                                                            |
 | stateRoot         | str           | Root hash of the state trie. Set to Null address (`0x0`).                                                                         |
 | transactionsRoot  | str           | Root hash of the transaction trie.  Set to Null address (`0x0`).                                                                   |
