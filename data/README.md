@@ -1,31 +1,71 @@
+# ZKsyn Dataset
+
+The ZKsyn dataset provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKSync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKSync data.
+
+This dataset provides a rich source of data for analyzing the ZKSync network and its transaction dynamics.
+
+## Data Description
+
+The dataset is stored in Parquet format, organized into multiple subfiles:
+
+- **Blocks:** 298 files
+- **Transactions:** 298 files
+- **Transaction receipts:** 298 files
+- **Logs:** 298 files
+- **L2 to L1 logs:** 298 files
+
+These files are structured to facilitate processing on local machines, such as laptops. Python scripts are provided for data download, along with [Jupyter notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks) for quick exploration and analysis. The dataset aims to support in-depth analysis of the ZKSync network and its transactions.
+
+## Usage Recommendations
+
+For loading and processing the data, we recommend using the [Polars](https://github.com/pola-rs/polars) library. Example code snippets are available in the provided in [./notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks).
+
+## Dataset Statistics
+
+- **Transactions:** 327,174,035
+- **Blocks:** 29,710,983
+  - Block range: 1 (February 14th, 2023, 14:22:22) to 29,710,983 (March 24th, 2024, 00:00:00)
+- **Logs:**
+  - Unique topics_0 (proxy for event name): 14,388
+  - Total events triggered: 2,044,221,151
+  - Unique contracts called: 981,892
+- **Transfer events:**
+  - Total transfer events: 1,479,714,503
+  - Filtered transfer events that do not account for ZKsync fees processing: 704,720,525
+- **Unique wallet addresses:** 7,322,502
 
 
 ## Blocks
+
+Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain transaction information, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
+
+We list the attributes of the blocks in the ZKsyn dataset below:
+
 | Attribute         | Type          | Description                                                                                           |
 |-------------------|---------------|-------------------------------------------------------------------------------------------------------|
 | hash              | str           | Unique identifier for the block.                                                                      |
 | parentHash        | str           | Unique identifier of the parent block.                                                                |
-| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers.                                                              |
-| miner             | str           | Address of the miner who mined the block.                                                             |
-| stateRoot         | str           | Root hash of the state trie.                                                                          |
-| transactionsRoot  | str           | Root hash of the transaction trie.                                                                    |
-| receiptsRoot      | str           | Root hash of the receipts trie.                                                                       |
+| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. In ZKsyn it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
+| miner             | str           | Address of the miner who mined the block. This is set as Null address (`0x0`) in all ZKsync blocks since it does not have miners or block validators.                                                            |
+| stateRoot         | str           | Root hash of the state trie. Set to Null address (`0x0`).                                                                         |
+| transactionsRoot  | str           | Root hash of the transaction trie.  Set to Null address (`0x0`).                                                                   |
+| receiptsRoot      | str           | Root hash of the receipts trie.  Set to Null address (`0x0`).                                                                        |
 | number            | i64           | Block number or height.                                                                               |
-| l1BatchNumber     | str           | L1 batch number, related to the sequence of batches submitted to Layer 1 in zkRollup systems.         |
+| l1BatchNumber     | str           | L1 batch number, related to the sequence of batches submitted to Layer 1 in zkRollup systems.       |
 | gasUsed           | i64           | Total amount of gas used by all transactions in the block.                                            |
-| gasLimit          | i64           | Maximum amount of gas that can be used by all transactions in the block.                              |
-| baseFeePerGas     | i64           | Base fee per unit of gas.                                                                             |
-| extraData         | str           | Extra data included by the miner in the block.                                                        |
-| logsBloom         | str           | Bloom filter for the logs of the block.                                                               |
-| timestamp         | i64           | Unix timestamp of when the block was mined.                                                           |
-| l1BatchTimestamp  | str           | Timestamp of the L1 batch, related to the zkRollup system.                                            |
-| difficulty        | i64           | Difficulty target for mining the block.                                                               |
-| totalDifficulty   | i64           | Cumulative difficulty of the blockchain up to and including this block.                               |
-| sealFields        | list[null]    | Seal fields containing proof-of-work or proof-of-stake information.                                   |
-| uncles            | list[null]    | Uncle blocks that were mined but not included in the main chain.                                      |
-| size              | i64           | Size of the block in bytes.                                                                           |
-| mixHash           | str           | Hash used in the mining process to prove that enough computational work has been performed.           |
-| nonce             | str           | Value used in the mining process to find a valid block hash.                                          |
+| gasLimit          | i64           | Maximum amount of gas that can be used by all transactions in the block.   Set to 4,294,967,296 (2^32) units of gas.                       |
+| baseFeePerGas     | i64           | Base fee, in Wei (10^-18 ETH), per unit of gas.                                                                             |
+| extraData         | str           | Extra data included by the miner in the block. Set to `"0x"` since there are no miner.                                                       |
+| logsBloom         | str           | Bloom filter for the logs of the block. Set to `0x0...0`.                                                              |
+| timestamp         | i64           | Unix timestamp of when the block was collated.                                                           |
+| l1BatchTimestamp  | str           |L1 batch timestamp (in HEX format) associated with the block.                                            |
+| difficulty        | i64           | Difficulty target for mining the block.  Set to 0 since there is not mining.                                                             |
+| totalDifficulty   | i64           | Cumulative difficulty of the blockchain up to and including this block.    Set to 0 since there is not mining.                                |
+| sealFields        | list[null]    | Seal fields containing proof-of-work or proof-of-stake information.   List containng null a since value.                                |
+| uncles            | list[null]    | Uncle blocks that were mined but not included in the main chain.   List with Null value since there is not mining.                                   |
+| size              | i64           | Size of the block in bytes.  Set to 0.                                                                         |
+| mixHash           | str           | Hash used in the mining process to prove that enough computational work has been performed.  Set to `0x0...0` since there is not mining.         |
+| nonce             | str           | Value used in the mining process to find a valid block hash.    Set to `0x0000000000000000` since there is not mining.                                     |
 
 
 ## Transactions
