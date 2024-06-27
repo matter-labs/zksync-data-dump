@@ -1,6 +1,6 @@
-# ZKsyn Dataset
+# ZKSync Dataset
 
-The ZKsyn dataset provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKSync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKSync data.
+The ZKSync dataset provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKSync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKSync data.
 
 This dataset provides a rich source of data for analyzing the ZKSync network and its transaction dynamics.
 
@@ -39,13 +39,13 @@ For loading and processing the data, we recommend using the [Polars](https://git
 
 Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain transaction information, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
 
-We list the attributes of the blocks in the ZKsyn dataset below:
+We list the attributes of the blocks in the ZKSync dataset below:
 
 | Attribute         | Type          | Description                                                                                           |
 |-------------------|---------------|-------------------------------------------------------------------------------------------------------|
 | hash              | str           | Unique identifier for the block.                                                                      |
 | parentHash        | str           | Unique identifier of the parent block.                                                                |
-| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. In ZKsyn it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
+| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. In ZKSync it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
 | miner             | str           | Address of the miner who mined the block. This is set as Null address (`0x0`) in all ZKsync blocks since it does not have miners or block validators.                                                            |
 | stateRoot         | str           | Root hash of the state trie. Set to Null address (`0x0`).                                                                         |
 | transactionsRoot  | str           | Root hash of the transaction trie.  Set to Null address (`0x0`).                                                                   |
@@ -61,7 +61,7 @@ We list the attributes of the blocks in the ZKsyn dataset below:
 | l1BatchTimestamp  | str           |L1 batch timestamp (in HEX format) associated with the block.                                            |
 | difficulty        | i64           | Difficulty target for mining the block.  Set to 0 since there is not mining.                                                             |
 | totalDifficulty   | i64           | Cumulative difficulty of the blockchain up to and including this block.    Set to 0 since there is not mining.                                |
-| sealFields        | list[null]    | Seal fields containing proof-of-work or proof-of-stake information.   List containng null a since value.                                |
+| sealFields        | list[null]    | Seal fields containing proof-of-work or proof-of-stake information.   List containng null as value.                                |
 | uncles            | list[null]    | Uncle blocks that were mined but not included in the main chain.   List with Null value since there is not mining.                                   |
 | size              | i64           | Size of the block in bytes.  Set to 0.                                                                         |
 | mixHash           | str           | Hash used in the mining process to prove that enough computational work has been performed.  Set to `0x0...0` since there is not mining.         |
