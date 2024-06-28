@@ -185,10 +185,12 @@ def check_sig(sig, topics_0):
 
 We provide a mapping of the most frequently invoked events within the ZKsync dataset in [./src/utils.py#events_dict](https://github.com/matter-labs/zksync-data-dump/blob/main/src/utils.py). This mapping facilitates the parsing of the majority of events in our dataset. The mapping is structured as a dictionary where the topics_0 hex value serves as the key, and the corresponding value is a dictionary containing the parsed event name and its function signature. For instance, the Transfer event is represented as follows within the map:
 
+```python
 events_dict['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'] = {
     'name': 'Transfer',
     'signature': 'Transfer(address,address,uint256)'
 }
+```
 
 
 ## L2 to L1 logs
