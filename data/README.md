@@ -87,16 +87,16 @@ Transactions are identified by a unique transaction hash. When issuing a transac
 | input                    | str   | Data sent along with the transaction. In HEX code.                                      |
 | l1BatchNumber            | str   | L1 batch number related to the transaction in zkRollup systems.             |
 | l1BatchTxIndex           | str   | Index of the transaction in the L1 batch.                                   |
-| maxFeePerGas             | i64   | Maximum fee (in XX) per unit of gas.                                                |
-| maxPriorityFeePerGas     | i64   | Maximum priority fee (in XX) per unit of gas.                                       |
+| maxFeePerGas             | i64   | Maximum fee, in Wei (10^-18 ETH), per unit of gas.                                                |
+| maxPriorityFeePerGas     | i64   | Maximum priority fee, in Wei (10^-18 ETH), per unit of gas.                                       |
 | nonce                    | i64   | Number of transactions sent by the sender prior to this one.                |
 | r                        | str   | First part of the ECDSA signature.                                          |
 | s                        | str   | Second part of the ECDSA signature.                                         |
 | to                       | str   | Address of the receiver of the transaction.                                 |
 | transactionIndex         | i64   | Index of the transaction within the block.                                  |
-| type                     | i64   | Type of transaction.                                                        |
+| type                     | i64   | Type of transaction devided into 5 caterogies: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                       |
 | v                        | f64   | Recovery id of the ECDSA signature.                                         |
-| value                    | str   | Amount of cryptocurrency being transferred in the transaction.              |
+| value                    | str   | Amount of tokens (in Wei and in HEX format) being transferred in the transaction to the receiptent address (`to`).|
 
 
 ## Transaction receipts
