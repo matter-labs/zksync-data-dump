@@ -1,12 +1,12 @@
-# ZKsync Dataset
+# ZKsync Data Set
 
-The ZKsync dataset provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKsync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKsync data.
+The ZKsync data set provides comprehensive data on blocks, transactions, transaction receipts, transaction logs, and L2 to L1 logs from ZKsync blockchain. It spans from February 14th, 2023, to March 24th, 2024, capturing raw ZKsync data.
 
-This dataset provides a rich source of data for analyzing the ZKsync network and its transaction dynamics.
+This data set provides a rich source of data for analyzing the ZKsync network and its transaction dynamics.
 
 ## Data Description
 
-The dataset is stored in Parquet format, organized into multiple subfiles:
+The data set is stored in Parquet format, organized into multiple subfiles:
 
 - **Blocks:** 298 files
 - **Transactions:** 298 files
@@ -14,13 +14,13 @@ The dataset is stored in Parquet format, organized into multiple subfiles:
 - **Logs:** 298 files
 - **L2 to L1 logs:** 298 files
 
-These files are structured to facilitate processing on local machines, such as laptops. Python scripts are provided for data download, along with [Jupyter notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks) for quick exploration and analysis. The dataset aims to support in-depth analysis of the ZKsync network and its transactions.
+These files are structured to facilitate processing on local machines, such as laptops. Python scripts are provided for data download, along with [Jupyter notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks) for quick exploration and analysis. The data set aims to support in-depth analysis of the ZKsync network and its transactions.
 
 ## Usage Recommendations
 
 For loading and processing the data, we recommend using the [Polars](https://github.com/pola-rs/polars) library. Example code snippets are available in the provided in [./notebooks](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks).
 
-## Dataset Statistics
+## Data Set Statistics
 
 - **Transactions:** 327,174,035
 - **Blocks:** 29,710,983
@@ -37,11 +37,11 @@ For loading and processing the data, we recommend using the [Polars](https://git
 
 ## Blocks
 
-Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain a list of transaction, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
+Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain a list of transactions, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
 
-> **Note:** Blocks should be sorted by the `number` attribute to maintain the correct order of the blocks in the blockchain.
+> **Note:** Blocks should be sorted by the `number` attribute to maintain the correct order of the blocks on the blockchain.
 
-We list the attributes of the blocks data in the ZKsync dataset below:
+We list the attributes of the blocks data in the ZKsync data set below:
 
 | Attribute         | Type          | Description                                                                                           |
 |-------------------|---------------|-------------------------------------------------------------------------------------------------------|
@@ -71,15 +71,15 @@ We list the attributes of the blocks data in the ZKsync dataset below:
 
 
 ## Transactions
-Transactions are digital interactions that involve transferring assets, recording data, or executing smart contracts between parties on blockchains like those based on the Ethereum Virtual Machine (EVM). Each transaction is initiated by a user, authenticated through cryptographic signatures, and broadcasted to a decentralized network of nodes for validation. Once verified, transactions are grouped into blocks and added to the blockchain via a consensus mechanism, ensuring they are secure, immutable, transparent, and free from intermediaries, forming the core of the blockchain system.
+Transactions are digital interactions that involve transferring assets, recording data, or executing smart contracts between parties on blockchains like those based on the Ethereum Virtual Machine (EVM). Each transaction is initiated by a user, authenticated through cryptographic signatures, and broadcasted to a decentralized network of nodes for validation. Once verified, transactions are grouped into blocks and added to the blockchain via a consensus mechanism, ensuring that they are secure, immutable, transparent, and free of intermediaries, forming the core of the blockchain system.
 
 In rollups, such as ZKsync, transactions are aggregated and processed off the underlying blockchain (e.g., Ethereum, a Layer 1 blockchain) to enhance scalability and reduce costs. Rollups bundle multiple transactions into a single batch, which is then submitted to the underlying blockchain as one transaction. This method reduces the load on the underlying chain while ensuring transaction security and finality through cryptographic proofs, like Zero-Knowledge (ZK) proofs used by ZKsync, or validity checks. By processing transactions off-chain and periodically committing the results to the underlying chain, rollups improve throughput and efficiency without compromising the blockchain’s security and decentralization.
 
 Transactions are identified by a unique transaction hash. When issuing a transaction, the user needs to specify parameters such as the recipient address (which can also be a smart contract and the functions the user wants to call), the amount of tokens to transfer, the gas price, and the gas limit. The gas price represents the fee the user is willing to pay per unit of gas, while the gas limit is the maximum amount of gas the user is willing to consume for the transaction, a mechanism introduced to prevent infinite loops or excessive resource consumption due to the [halting problem](https://en.wikipedia.org/wiki/Halting_problem). Another important parameter is the transaction receipt, which contains the status of the transaction (success or failure), and the amount of actual gas used. The specifics of transaction receipts are discussed in the next section.
 
-> **Note:** Transactions should be sorted by the `blockNumber` and `transactionIndex` attributes to maintain the correct order of the transactions in the blockchain.
+> **Note:** Transactions should be sorted by the `blockNumber` and `transactionIndex` attributes to maintain the correct order of the transactions on the blockchain.
 
-We list the attributes of the transactions data in the ZKsync dataset below:
+We list the attributes of the transactions data in the ZKsync data set below:
 
 
 | Attribute                | Type  | Description                                                                 |
@@ -101,9 +101,9 @@ We list the attributes of the transactions data in the ZKsync dataset below:
 | s                        | str   | Second part of the ECDSA signature.                                         |
 | to                       | str   | Address of the receiver of the transaction.                                 |
 | transactionIndex         | i64   | Index of the transaction within the block.                                  |
-| type                     | i64   | Type of transaction devided into 5 caterogies: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                       |
+| type                     | i64   | Type of transaction divided into 5 categories: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                       |
 | v                        | f64   | Recovery id of the ECDSA signature.                                         |
-| value                    | str   | Amount of tokens (in Wei and in HEX format) being transferred in the transaction to the receiptent address (`to`).|
+| value                    | str   | Amount of tokens (in Wei and in HEX format) that are transferred in the transaction to the receiptent address (`to`).|
 
 
 ## Transaction receipts
@@ -112,7 +112,7 @@ Transaction receipts provide a comprehensive summary of the outcome and effects 
 
 > **Note:** Similarly to transactions, transaction receipt data should be sorted by the `blockNumber` and `transactionIndex` attributes to maintain the correct order of transactions on the blockchain.
 
-We list the attributes of the transactions receipts data in the ZKsync dataset below:
+We list the attributes of the transactions receipts data in the ZKsync data set below:
 
 
 | Attribute              | Type  | Description                                                                   |
@@ -132,21 +132,19 @@ We list the attributes of the transactions receipts data in the ZKsync dataset b
 | to                     | str   | Address of the receiver of the transaction.                                   |
 | transactionHash        | str   | Unique identifier for the transaction.                                        |
 | transactionIndex       | i64   | Index of the transaction within the block.                                    |
-| type                   | i64   | Type of transaction devided into 5 caterogies: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                          |
+| type                   | i64   | Type of transaction divided into 5 categories: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                          |
 
 
 
 ## Transaction Logs
 
-Transaction logs are systematic records of events generated during the execution of transactions, particularly in interactions involving smart contracts. Each log entry comprises a log index, data, and topics, crucial for identifying and categorizing specific events such as token transfers, approvals, swaps, minting, and voting. These logs are emitted using the `emit` keyword within smart contract code and play a pivotal role in monitoring activities, triggering actions within decentralized applications, and enabling event-driven programming. For instance, decentralized exchanges (DEXs) emit events upon trade executions, enabling user interfaces to update displays with current trade information.
+In this section, we discuss the attributes of the transaction logs data in the ZKsync data set in details. Transaction logs are systematic records of events generated during the execution of transactions, particularly in interactions involving smart contracts. Each log entry comprises a log index, data, and topics, crucial for identifying and categorizing specific events such as token transfers, approvals, swaps, minting, and voting. These logs are emitted using the `emit` keyword within smart contract code and play a pivotal role in monitoring activities, triggering actions within decentralized applications, and enabling event-driven programming. For instance, decentralized exchanges (DEXs) emit events upon trade executions, enabling user interfaces to update displays with current trade information.
 
 These logs are stored in transaction receipts, offering a gas-efficient method to capture transient event data without permanently altering the blockchain's state. They are indispensable for auditing, analytics, and ensuring seamless interaction between smart contracts and external systems. Among the vast array of data accessible on EVM-based blockchains, transaction logs stand out as crucial sources of information for researchers, developers, and users. They facilitate analyses of various token transfer patterns and support blockchain analysis research.
 
-In this section we discuss the attributes of the transaction logs data in the ZKsync dataset in details.
+> **Note:** Transaction logs should be sorted by the `blockNumber`, `transactionIndex`, and `logIndex` attributes to maintain the correct order in which they are stored on the blockchain. This is particularly important when analyzing the different states of a blockchain before and after the execution of a transaction that triggers a smart contract function.
 
-> **Note:** Transaction logs should be sorted by the `blockNumber`, `transactionIndex`, and `logIndex` attributes to maintain the correct order in which they are stored in the blockchain. This is particularly important when analyzing the different states of a blockchain before and after the execution of a transaction that triggers a smart contract function.
-
-We list the attributes of the transactions logs data in the ZKsync dataset below:
+We list the attributes of the transactions logs data in the ZKsync data set below:
 
 | Attribute             | Type  | Description                                                      |
 |-----------------------|-------|------------------------------------------------------------------|
@@ -183,7 +181,7 @@ def check_sig(sig, topics_0):
 
 ### Event Mapping
 
-We provide a mapping of the most frequently invoked events within the ZKsync dataset in [./src/utils.py#events_dict](https://github.com/matter-labs/zksync-data-dump/blob/main/src/utils.py). This mapping facilitates the parsing of the majority of events in our dataset. The mapping is structured as a dictionary where the topics_0 hex value serves as the key, and the corresponding value is a dictionary containing the parsed event name and its function signature. For instance, the Transfer event is represented as follows within the map:
+We provide a mapping of the most frequently invoked events within the ZKsync data set in [./src/utils.py#events_dict](https://github.com/matter-labs/zksync-data-dump/blob/main/src/utils.py). This mapping facilitates the parsing of the majority of events in our data set. The mapping is structured as a dictionary where the topics_0 hex value serves as the key, and the corresponding value is a dictionary containing the parsed event name and its function signature. For instance, the Transfer event is represented as follows within the map:
 
 ```python
 events_dict['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'] = {
@@ -195,7 +193,7 @@ events_dict['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
 ## L2 to L1 logs
 
-We list the attributes of the L2 to L1 logs data in the ZKsync dataset below:
+We list the attributes of the L2 to L1 logs data in the ZKsync data set below:
 | Attribute             | Type  | Description                                                         |
 |-----------------------|-------|---------------------------------------------------------------------|
 | blockHash             | str   | Unique identifier of the block containing the log.                  |
