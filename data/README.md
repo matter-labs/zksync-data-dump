@@ -47,7 +47,7 @@ We list the attributes of the blocks data in the ZKsync dataset below:
 |-------------------|---------------|-------------------------------------------------------------------------------------------------------|
 | hash              | str           | Unique identifier for the block.                                                                      |
 | parentHash        | str           | Unique identifier of the parent block.                                                                |
-| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. In ZKsync it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
+| sha3Uncles        | str           | SHA-3 hash of the uncles' block headers. On ZKsync it is set to `0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347` since there are no uncle blocks.                                                             |
 | miner             | str           | Address of the miner who mined the block. This is set as Null address (`0x0`) in all ZKsync blocks since it does not have miners or block validators.                                                            |
 | stateRoot         | str           | Root hash of the state trie. Set to Null address (`0x0`).                                                                         |
 | transactionsRoot  | str           | Root hash of the transaction trie.  Set to Null address (`0x0`).                                                                   |
@@ -120,13 +120,13 @@ We list the attributes of the transactions receipts data in the ZKsync dataset b
 | blockHash              | str   | Unique identifier of the block containing the transaction.                    |
 | blockNumber            | i64   | Block number or height containing the transaction.                            |
 | contractAddress        | str   | Address of the contract created by the transaction, if applicable.            |
-| cumulativeGasUsed      | i64   | Total amount of gas used when the transaction was executed in the block. Set to 0 in ZKsync.      |
+| cumulativeGasUsed      | i64   | Total amount of gas used when the transaction was executed in the block. Set to 0 on ZKsync.      |
 | effectiveGasPrice      | i64   | Actual price per unit of gas , in Wei (10^-18 ETH),paid.                                            |
 | from                   | str   | Address of the sender of the transaction.                                     |
 | gasUsed                | i64   | Amount of gas used by the transaction.                                        |
 | l1BatchNumber          | str   | L1 batch number related to the transaction in zkRollup systems.               |
 | l1BatchTxIndex         | str   | Index of the transaction in the L1 batch.                                     |
-| logsBloom              | str   | Bloom filter for the logs of the transaction. Set to `0x0...0` in ZKsync.                                 |
+| logsBloom              | str   | Bloom filter for the logs of the transaction. Set to `0x0...0` on ZKsync.                                 |
 | root                   | str   | State root after the transaction is executed.                                 |
 | status                 | i64   | Status of the transaction (1 for success, 0 for failure).                     |
 | to                     | str   | Address of the receiver of the transaction.                                   |
@@ -134,26 +134,61 @@ We list the attributes of the transactions receipts data in the ZKsync dataset b
 | transactionIndex       | i64   | Index of the transaction within the block.                                    |
 | type                   | i64   | Type of transaction devided into 5 caterogies: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                          |
 
-## Transaction logs
+
+
+## Transaction Logs
+
+Transaction logs are systematic records of events generated during the execution of transactions, particularly in interactions involving smart contracts. Each log entry comprises a log index, data, and topics, crucial for identifying and categorizing specific events such as token transfers, approvals, swaps, minting, and voting. These logs are emitted using the `emit` keyword within smart contract code and play a pivotal role in monitoring activities, triggering actions within decentralized applications, and enabling event-driven programming. For instance, decentralized exchanges (DEXs) emit events upon trade executions, enabling user interfaces to update displays with current trade information.
+
+These logs are stored in transaction receipts, offering a gas-efficient method to capture transient event data without permanently altering the blockchain's state. They are indispensable for auditing, analytics, and ensuring seamless interaction between smart contracts and external systems. Among the vast array of data accessible on EVM-based blockchains, transaction logs stand out as crucial sources of information for researchers, developers, and users. They facilitate analyses of various token transfer patterns and support blockchain analysis research.
+
+In this section we discuss the attributes of the transaction logs data in the ZKsync dataset in details.
+
+> **Note:** Transaction logs should be sorted by the `blockNumber`, `transactionIndex`, and `logIndex` attributes to maintain the correct order in which they are stored in the blockchain. This is particularly important when analyzing the different states of a blockchain before and after the execution of a transaction that triggers a smart contract function.
 
 We list the attributes of the transactions logs data in the ZKsync dataset below:
+
 | Attribute             | Type  | Description                                                      |
 |-----------------------|-------|------------------------------------------------------------------|
 | address               | str   | Address of the contract that generated the log.                  |
 | blockHash             | str   | Unique identifier of the block containing the transaction.       |
 | blockNumber           | i64   | Block number or height containing the transaction.               |
-| data                  | str   | Data contained in the log.                                       |
+| data                  | str   | Data contained in the log.  This can be used, for example, to extract the amont of tokens transferred from one users to the other.                                     |
 | l1BatchNumber         | str   | L1 batch number related to the log in zkRollup systems.          |
 | logIndex              | i64   | Index of the log within the block.                               |
-| logType               | null  | Type of log.                                                     |
+| logType               | null  | Type of log.  Set to `null` on ZKsync                                                   |
 | removed               | bool  | Indicates whether the log was removed (true) or not (false).     |
 | transactionHash       | str   | Unique identifier for the transaction.                           |
 | transactionIndex      | i64   | Index of the transaction within the block.                       |
-| transactionLogIndex   | str   | Index of the log within the transaction.                         |
-| topics_0              | str   | First topic of the log.                                          |
+| transactionLogIndex   | str   | Index of the log within the transaction. In HEX format.                        |
+| topics_0              | str   | First topic of the log. This is typically referred to as the name of the event encoded in hexadecimal (HEX) format.                                        |
 | topics_1              | str   | Second topic of the log.                                         |
 | topics_2              | str   | Third topic of the log.                                          |
 | topics_3              | str   | Fourth topic of the log.                                         |
+
+
+### Topics Attributes
+
+The interpretation of the `topics` attributes (`topics_0`, `topics_1`, `topics_2`, and `topics_3`) depends on the implementation details of the invoked function within a smart contract. Typically, `topics_0` represents the event name, while subsequent topics represent indexed parameters of the event. The `data` attribute contains non-indexed event parameters. For example, in the context of a token transfer event, `topics_0` might signify the event name `Transfer`, `topics_1` and `topics_2` could respectively denote sender and receiver addresses, and `data` would typically represent the amount of tokens transferred.
+
+### Hashing and Signatures
+
+`topics_0` corresponds to the hashed function signature using `keccak256`. This signature consists of the function name followed by its parameter types. For example, the signature of a typical `Transfer` event is `Transfer(address,address,uint256)`. After hashing it with `keccak256`, the result becomes `0xddf2 ... b3ef`, which is the `topics_0`. Below is a Python code snippet demonstrating how to verify if a given signature matches `topics_0`:
+
+```python
+import web3
+def check_sig(sig, topics_0):
+    return web3.Web3.keccak(text=sig).hex() == topics_0
+```
+
+### Event Mapping
+
+We provide a mapping of the most frequently invoked events within the ZKsync dataset in [./src/utils.py#events_dict](https://github.com/matter-labs/zksync-data-dump/blob/main/src/utils.py). This mapping facilitates the parsing of the majority of events in our dataset. The mapping is structured as a dictionary where the topics_0 hex value serves as the key, and the corresponding value is a dictionary containing the parsed event name and its function signature. For instance, the Transfer event is represented as follows within the map:
+
+events_dict['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'] = {
+    'name': 'Transfer',
+    'signature': 'Transfer(address,address,uint256)'
+}
 
 
 ## L2 to L1 logs
