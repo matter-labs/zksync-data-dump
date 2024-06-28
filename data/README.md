@@ -37,7 +37,7 @@ For loading and processing the data, we recommend using the [Polars](https://git
 
 ## Blocks
 
-Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain transaction information, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
+Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain a list of transaction, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
 
 We list the attributes of the blocks in the ZKsync dataset below:
 
@@ -69,20 +69,26 @@ We list the attributes of the blocks in the ZKsync dataset below:
 
 
 ## Transactions
+Transactions are digital interactions that involve transferring assets, recording data, or executing smart contracts between parties on blockchains like those based on the Ethereum Virtual Machine (EVM). Each transaction is initiated by a user, authenticated through cryptographic signatures, and broadcasted to a decentralized network of nodes for validation. Once verified, transactions are grouped into blocks and added to the blockchain via a consensus mechanism, ensuring they are secure, immutable, transparent, and free from intermediaries, forming the core of the blockchain system.
+
+In rollups, such as ZKsync, transactions are aggregated and processed off the underlying blockchain (e.g., Ethereum, a Layer 1 blockchain) to enhance scalability and reduce costs. Rollups bundle multiple transactions into a single batch, which is then submitted to the underlying blockchain as one transaction. This method reduces the load on the underlying chain while ensuring transaction security and finality through cryptographic proofs, like Zero-Knowledge (ZK) proofs used by ZKsync, or validity checks. By processing transactions off-chain and periodically committing the results to the underlying chain, rollups improve throughput and efficiency without compromising the blockchain’s security and decentralization.
+
+Transactions are identified by a unique transaction hash. When issuing a transaction, the user needs to specify parameters such as the recipient address (which can also be a smart contract and the functions the user wants to call), the amount of tokens to transfer, the gas price, and the gas limit. The gas price represents the fee the user is willing to pay per unit of gas, while the gas limit is the maximum amount of gas the user is willing to consume for the transaction, a mechanism introduced to prevent infinite loops or excessive resource consumption due to the [halting problem](https://en.wikipedia.org/wiki/Halting_problem). Another important parameter is the transaction receipt, which contains the status of the transaction (success or failure), the amount of actual gas used, and the cumulative gas used among all transactions in that block. The specifics of transaction receipts are discussed in the next section.
+
 | Attribute                | Type  | Description                                                                 |
 |--------------------------|-------|-----------------------------------------------------------------------------|
 | blockHash                | str   | Unique identifier of the block containing the transaction.                  |
 | blockNumber              | i64   | Block number or height containing the transaction.                          |
-| chainId                  | i64   | Identifier of the blockchain network.                                       |
+| chainId                  | i64   | Identifier of the blockchain network. Set to 324 that represents ZKsync chain.                                      |
 | from                     | str   | Address of the sender of the transaction.                                   |
-| gas                      | i64   | Amount of gas provided for the transaction.                                 |
+| gas                      | i64   | Amount of gas provided as `gasLimit` for the transaction.                                 |
 | gasPrice                 | i64   | Price per unit of gas the sender is willing to pay.                         |
 | hash                     | str   | Unique identifier for the transaction.                                      |
-| input                    | str   | Data sent along with the transaction.                                       |
+| input                    | str   | Data sent along with the transaction. In HEX code.                                      |
 | l1BatchNumber            | str   | L1 batch number related to the transaction in zkRollup systems.             |
 | l1BatchTxIndex           | str   | Index of the transaction in the L1 batch.                                   |
-| maxFeePerGas             | i64   | Maximum fee per unit of gas.                                                |
-| maxPriorityFeePerGas     | i64   | Maximum priority fee per unit of gas.                                       |
+| maxFeePerGas             | i64   | Maximum fee (in XX) per unit of gas.                                                |
+| maxPriorityFeePerGas     | i64   | Maximum priority fee (in XX) per unit of gas.                                       |
 | nonce                    | i64   | Number of transactions sent by the sender prior to this one.                |
 | r                        | str   | First part of the ECDSA signature.                                          |
 | s                        | str   | Second part of the ECDSA signature.                                         |
