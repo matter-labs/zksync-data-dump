@@ -39,7 +39,9 @@ For loading and processing the data, we recommend using the [Polars](https://git
 
 Blocks are sequential units of data within a blockchain, each identified by a unique hash. They contain a list of transaction, metadata such as timestamps and the hash of the previous block (`parentHash`), which links them in a chain back to the genesis block (block number 0). This chain of blocks forms the blockchain. Blocks ensure transaction security, network consensus, and efficient data storage and processing within blockchain networks.
 
-We list the attributes of the blocks in the ZKsync dataset below:
+> **Note:** Blocks should be sorted by the `number` attribute to maintain the correct order of the blocks in the blockchain.
+
+We list the attributes of the blocks data in the ZKsync dataset below:
 
 | Attribute         | Type          | Description                                                                                           |
 |-------------------|---------------|-------------------------------------------------------------------------------------------------------|
@@ -73,7 +75,12 @@ Transactions are digital interactions that involve transferring assets, recordin
 
 In rollups, such as ZKsync, transactions are aggregated and processed off the underlying blockchain (e.g., Ethereum, a Layer 1 blockchain) to enhance scalability and reduce costs. Rollups bundle multiple transactions into a single batch, which is then submitted to the underlying blockchain as one transaction. This method reduces the load on the underlying chain while ensuring transaction security and finality through cryptographic proofs, like Zero-Knowledge (ZK) proofs used by ZKsync, or validity checks. By processing transactions off-chain and periodically committing the results to the underlying chain, rollups improve throughput and efficiency without compromising the blockchain’s security and decentralization.
 
-Transactions are identified by a unique transaction hash. When issuing a transaction, the user needs to specify parameters such as the recipient address (which can also be a smart contract and the functions the user wants to call), the amount of tokens to transfer, the gas price, and the gas limit. The gas price represents the fee the user is willing to pay per unit of gas, while the gas limit is the maximum amount of gas the user is willing to consume for the transaction, a mechanism introduced to prevent infinite loops or excessive resource consumption due to the [halting problem](https://en.wikipedia.org/wiki/Halting_problem). Another important parameter is the transaction receipt, which contains the status of the transaction (success or failure), the amount of actual gas used, and the cumulative gas used among all transactions in that block. The specifics of transaction receipts are discussed in the next section.
+Transactions are identified by a unique transaction hash. When issuing a transaction, the user needs to specify parameters such as the recipient address (which can also be a smart contract and the functions the user wants to call), the amount of tokens to transfer, the gas price, and the gas limit. The gas price represents the fee the user is willing to pay per unit of gas, while the gas limit is the maximum amount of gas the user is willing to consume for the transaction, a mechanism introduced to prevent infinite loops or excessive resource consumption due to the [halting problem](https://en.wikipedia.org/wiki/Halting_problem). Another important parameter is the transaction receipt, which contains the status of the transaction (success or failure), and the amount of actual gas used. The specifics of transaction receipts are discussed in the next section.
+
+> **Note:** Transactions should be sorted by the `blockNumber` and `transactionIndex` attributes to maintain the correct order of the transactions in the blockchain.
+
+We list the attributes of the transactions data in the ZKsync dataset below:
+
 
 | Attribute                | Type  | Description                                                                 |
 |--------------------------|-------|-----------------------------------------------------------------------------|
@@ -100,26 +107,36 @@ Transactions are identified by a unique transaction hash. When issuing a transac
 
 
 ## Transaction receipts
+
+Transaction receipts provide a comprehensive summary of the outcome and effects of a transaction once it is processed and included in a block. They include key details such as the transaction hash, block number, and block hash to identify and verify the transaction, along with the sender (`from`) and recipient (`to`) addresses. The receipts also detail the actual gas used by the specific transaction, and, if applicable, the address of any newly created smart contract. Additional information includes logs for event logging (discussed in the next section), the transaction’s status (success or failure), and the effective gas price paid. These receipts are crucial for users and developers to understand, audit, and interact with transactions and smart contracts on the blockchain. For example, they provide essential elements for transaction analysis, monitoring, and verification of transaction fees spent by users.
+
+> **Note:** Similarly to transactions, transaction receipt data should be sorted by the `blockNumber` and `transactionIndex` attributes to maintain the correct order of transactions on the blockchain.
+
+We list the attributes of the transactions receipts data in the ZKsync dataset below:
+
+
 | Attribute              | Type  | Description                                                                   |
 |------------------------|-------|-------------------------------------------------------------------------------|
 | blockHash              | str   | Unique identifier of the block containing the transaction.                    |
 | blockNumber            | i64   | Block number or height containing the transaction.                            |
 | contractAddress        | str   | Address of the contract created by the transaction, if applicable.            |
-| cumulativeGasUsed      | i64   | Total amount of gas used when the transaction was executed in the block.      |
-| effectiveGasPrice      | i64   | Actual price per unit of gas paid.                                            |
+| cumulativeGasUsed      | i64   | Total amount of gas used when the transaction was executed in the block. Set to 0 in ZKsync.      |
+| effectiveGasPrice      | i64   | Actual price per unit of gas , in Wei (10^-18 ETH),paid.                                            |
 | from                   | str   | Address of the sender of the transaction.                                     |
 | gasUsed                | i64   | Amount of gas used by the transaction.                                        |
 | l1BatchNumber          | str   | L1 batch number related to the transaction in zkRollup systems.               |
 | l1BatchTxIndex         | str   | Index of the transaction in the L1 batch.                                     |
-| logsBloom              | str   | Bloom filter for the logs of the transaction.                                 |
+| logsBloom              | str   | Bloom filter for the logs of the transaction. Set to `0x0...0` in ZKsync.                                 |
 | root                   | str   | State root after the transaction is executed.                                 |
 | status                 | i64   | Status of the transaction (1 for success, 0 for failure).                     |
 | to                     | str   | Address of the receiver of the transaction.                                   |
 | transactionHash        | str   | Unique identifier for the transaction.                                        |
 | transactionIndex       | i64   | Index of the transaction within the block.                                    |
-| type                   | i64   | Type of transaction.                                                          |
+| type                   | i64   | Type of transaction devided into 5 caterogies: Legacy (0 or `0x0`), [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) (1 or `0x1`), [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) (2 or `0x2`), [EIP-712](https://eips.ethereum.org/EIPS/eip-712) (113 or `0x71`), and Priority (255 or `0xff`). See more details in the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types).                                                          |
 
 ## Transaction logs
+
+We list the attributes of the transactions logs data in the ZKsync dataset below:
 | Attribute             | Type  | Description                                                      |
 |-----------------------|-------|------------------------------------------------------------------|
 | address               | str   | Address of the contract that generated the log.                  |
@@ -140,6 +157,8 @@ Transactions are identified by a unique transaction hash. When issuing a transac
 
 
 ## L2 to L1 logs
+
+We list the attributes of the L2 to L1 logs data in the ZKsync dataset below:
 | Attribute             | Type  | Description                                                         |
 |-----------------------|-------|---------------------------------------------------------------------|
 | blockHash             | str   | Unique identifier of the block containing the log.                  |
