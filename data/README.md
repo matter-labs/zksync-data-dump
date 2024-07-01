@@ -193,20 +193,24 @@ events_dict['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
 ## L2 to L1 logs
 
+These logs are messages emitted by the ZKsync Layer 2 (L2) network and sent to the Ethereum Layer 1 (L1) network. They play a crucial role in maintaining communication between the two layers and ensuring the security and integrity of transactions and data transfers.
+
+In ZKsync, the L1 smart contract verifies these communications by checking the messages alongside the ZK proofs. The only "provable" part of the communication from L2 to L1 is the native L2 to L1 logs emitted by the virtual machine (VM). These logs can be generated using the `to_l1 opcode`. For details refer to the [ZKsync documentation](https://docs.zksync.io/zk-stack/concepts/l1_l2_communication).
+
 We list the attributes of the L2 to L1 logs data in the ZKsync data set below:
 | Attribute             | Type  | Description                                                         |
 |-----------------------|-------|---------------------------------------------------------------------|
 | blockHash             | str   | Unique identifier of the block containing the log.                  |
 | blockNumber           | str   | Block number or height containing the log.                          |
-| isService             | bool  | Indicates whether the log is a service log (true) or not (false).   |
-| key                   | str   | Key associated with the log.                                        |
-| l1BatchNumber         | str   | L1 batch number related to the log in zkRollup systems.             |
+| isService             | bool  | Indicates whether the log is a service log (`true`) or not (`false`).   |
+| key                   | str   | Key associated with the log  that could be used to carry some data with the log.                                        |
+| l1BatchNumber         | str   | L1 batch number related to the log.             |
 | logIndex              | str   | Index of the log within the block.                                  |
-| sender                | str   | Address of the sender of the log.                                   |
-| shardId               | str   | Identifier of the shard where the log was generated.                |
+| sender                | str   | It is the value of `this` in the frame where the L2→L1 log was emitted.                                   |
+| shardId               | str   | It is the id of the shard the opcode was called. It is currently set to 0.                |
 | transactionHash       | str   | Unique identifier for the transaction associated with the log.      |
 | transactionIndex      | str   | Index of the transaction within the block.                          |
 | transactionLogIndex   | str   | Index of the log within the transaction.                            |
 | txIndexInL1Batch      | str   | Index of the transaction within the L1 batch.                       |
-| value                 | str   | Value associated with the log.                                      |
+| value                 | str   | Value associated with the log that could be used to carry some data with the log.                                      |
 
