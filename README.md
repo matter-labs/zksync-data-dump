@@ -6,8 +6,8 @@ This code gather data feed from different exchanges.
 
 
 
-The data set is available in the directory `./data/`
-We provide Jypyter notebooks to analyze the data in the directory `./notebooks/`
+The data set is available in the directory [./data/](https://github.com/matter-labs/zksync-data-dump/tree/main/data)
+We provide Jypyter notebooks to analyze the data in the directory [./notebooks/](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks)
 
 ------
 
