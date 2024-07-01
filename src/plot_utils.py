@@ -35,17 +35,45 @@ def get_plotly_layout(width, height):
     return layout
 
 
-def plot_cdf(data, width=800, height=450, xlog=False, xaxis_title='', color=colors['blue'], filename=False):
+def update_plotly_layout_in_place(fig, width, height):
+    fig.update_layout(
+        template="simple_white",
+        font=dict(size=18, family="Clear Sans"),
+        margin=go.layout.Margin(
+            l=10,  # left margin
+            r=10,  # right margin
+            b=10,  # bottom margin
+            t=10,  # top margin
+        ),
+        width=width,
+        height=height,
+        xaxis=dict(
+            minor_ticks="inside", showgrid=True, griddash="dash", minor_griddash="dot"
+        ),
+        yaxis=dict(
+            minor_ticks="inside", showgrid=True, griddash="dash", minor_griddash="dot"
+        ),
+    )
+
+
+def plot_cdf(
+    data,
+    width=800,
+    height=450,
+    xlog=False,
+    xaxis_title="",
+    color=colors["blue"],
+    filename=False,
+):
     fig = go.Figure(layout=get_plotly_layout(width=width, height=height))
     ecdf = ECDF(data)
-    fig.add_trace(go.Scatter(x=ecdf.x, y=ecdf.y,
-                             line=dict(color=color, width=5, dash=None)))
+    fig.add_trace(
+        go.Scatter(x=ecdf.x, y=ecdf.y, line=dict(color=color, width=5, dash=None))
+    )
     if xlog:
-        fig.update_xaxes(type='log')
-    fig.update_yaxes(range=[0, 1], tickformat=',.0%')
-    fig.update_layout(
-        xaxis_title=xaxis_title,
-        yaxis_title='CDF')
+        fig.update_xaxes(type="log")
+    fig.update_yaxes(range=[0, 1], tickformat=",.0%")
+    fig.update_layout(xaxis_title=xaxis_title, yaxis_title="CDF")
     if filename:
-        fig.savefig(filename, bbox_inches='tight')
+        fig.savefig(filename, bbox_inches="tight")
     return fig
