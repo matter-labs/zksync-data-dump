@@ -158,16 +158,16 @@ We list the attributes of the transactions logs data in the ZKsync data set belo
 | removed               | bool  | Indicates whether the log was removed (true) or not (false).     |
 | transactionHash       | str   | Unique identifier for the transaction.                           |
 | transactionIndex      | i64   | Index of the transaction within the block.                       |
-| transactionLogIndex   | str   | Index of the log within the transaction. In HEX format.                        |
-| topics_0              | str   | First topic of the log. This is typically referred to as the name of the event encoded in hexadecimal (HEX) format.                                        |
-| topics_1              | str   | Second topic of the log.                                         |
-| topics_2              | str   | Third topic of the log.                                          |
-| topics_3              | str   | Fourth topic of the log.                                         |
+| transactionLogIndex   | str   | Index of the log within the transaction. In hexadecimal (HEX) format.                        |
+| topics_0              | str   | First topic of the log encoded in hexadecimal (HEX) format. This refers to the `name` of the event trigerred e.g., `Transfer`, `Approval`, `Swap`, etc.                                        |
+| topics_1              | str   | Second topic of the log encoded in hexadecimal (HEX) format. Its function depends on the contract function implementation.                                          |
+| topics_2              | str   | Third topic of the log encoded in hexadecimal (HEX) format.  Its function depends on the contract function implementation.                                                     |
+| topics_3              | str   | Fourth topic of the log encoded in hexadecimal (HEX) format.  Its function depends on the contract function implementation.                                                    |
 
 
 ### Topics Attributes
 
-The interpretation of the `topics` attributes (`topics_0`, `topics_1`, `topics_2`, and `topics_3`) depends on the implementation details of the invoked function within a smart contract. Typically, `topics_0` represents the event name, while subsequent topics represent indexed parameters of the event. The `data` attribute contains non-indexed event parameters. For example, in the context of a token transfer event, `topics_0` might signify the event name `Transfer`, `topics_1` and `topics_2` could respectively denote sender and receiver addresses, and `data` would typically represent the amount of tokens transferred.
+The interpretation of the `topics` attributes (`topics_0`, `topics_1`, `topics_2`, and `topics_3`) depends on the implementation details of the invoked function within a smart contract. Typically, `topics_0` represents the event name like `Transfer`, `Approval`, and `Swap`, while subsequent topics represent indexed parameters of the event. The `data` attribute contains non-indexed event parameters. For example, in the context of a token transfer event, `topics_0` might signify the event name `Transfer`, `topics_1` and `topics_2` could respectively denote sender and receiver addresses, and `data` would typically represent the amount of tokens transferred. All these parameters are encoded in hexadecimal (HEX) format in our data set.
 
 ### Hashing and Signatures
 
