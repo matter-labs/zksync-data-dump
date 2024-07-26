@@ -2,9 +2,9 @@
 
 This repository contains an open dataset of the [ZKsync Era](https://zksync.io) blockchain network, provided by the [Research Team](https://matter-labs.io/research) at [Matter Labs](https://matter-labs.io). The dataset aims to offer comprehensive insights into the ZKsync Era blockchain, enabling researchers, developers, and enthusiasts to analyze and understand the network's transaction dynamics. Our dataset is publicly available and can be accessed through our data portal at [https://data.zksync.dev](https://data.zksync.dev).
 
-Our paper is available at [paper-data-strategy-for-zksync.pdf](https://github.com/matter-labs/zksync-data-dump/tree/main/paper-data-strategy-for-zksync.pdf). 
+Our paper is available at [paper-data-strategy-for-zksync.pdf](paper-data-strategy-for-zksync.pdf). 
 
-If you find this work useful, please consider citing our paper as detailed [here](https://github.com/matter-labs/zksync-data-dump?tab=readme-ov-file#license).
+If you find this work useful, please consider citing our paper as detailed [here](#license).
 
 ## Overview
 
@@ -56,7 +56,7 @@ These logs facilitate communication between ZKsync Layer 2 and Ethereum Layer 1,
 ## What's New
 
 - Initial version of the code and analysis
-- Paper is avaialble at [paper-data-strategy-for-zksync.pdf](https://github.com/matter-labs/zksync-data-dump/tree/main/paper-data-strategy-for-zksync.pdf). 
+- Paper is avaialble at [paper-data-strategy-for-zksync.pdf](paper-data-strategy-for-zksync.pdf). 
   
 
 ## Ask a Question
