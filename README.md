@@ -1,10 +1,12 @@
 # ZKsync Data
 
-This repository contains an open dataset of the [ZKsync Era](https://zksync.io) blockchain network, provided by the [Research Team](https://matter-labs.io/research) at [Matter Labs](https://matter-labs.io). The dataset aims to offer comprehensive insights into the ZKsync Era blockchain, enabling researchers, developers, and enthusiasts to analyze and understand the network's transaction dynamics. Our dataset is publicly available and can be accessed through our data portal at [https://data.zksync.dev](https://data.zksync.dev).
+Welcome to the ZKsync Data repository! This project provides an open dataset of the [ZKsync Era](https://zksync.io) blockchain network, curated by the [Research Team](https://matter-labs.io/research) at [Matter Labs](https://matter-labs.io). Our dataset offers a comprehensive view of the ZKsync Era blockchain, enabling researchers, developers, and enthusiasts to analyze and understand its transaction dynamics.
 
-Our paper is available at [paper-data-strategy-for-zksync.pdf](paper-data-strategy-for-zksync.pdf). 
+You can access the dataset through our data portal at [https://data.zksync.dev](https://data.zksync.dev). For further details, refer to the [Dataset Description](#dataset-description) section or the data folder at [./data/](./data/).
 
-If you find this work useful, please consider citing our paper as detailed [here](#license).
+For an in-depth explanation of our work, read our paper available on ArXiv at [https://arxiv.org/abs/2407.18699](https://arxiv.org/abs/2407.18699) or download it directly from [paper-data-strategy-for-zksync.pdf](paper-data-strategy-for-zksync.pdf).
+
+If you find this dataset useful, please cite our paper as described in the [License](#license) section.
 
 ## Overview
 
@@ -22,6 +24,11 @@ The dataset is organized into multiple subfiles in Parquet format, structured to
 
 ### Dataset Statistics
 
+You can download the full dataset from our data portal at [https://data.zksync.dev](https://data.zksync.dev). The dataset description and schema are available in the [./data/](./data/) directory. Jupyter notebooks for quick exploration and analysis are provided in the [./notebooks/](./notebooks/) directory. For loading and processing the data, we recommend using the [Polars](https://github.com/pola-rs/polars) library.
+
+We descibe the dataset statistics below:
+
+
 - **Transactions:** 327,174,035
 - **Blocks:** 29,710,983
   - Block range: 1 (February 14th, 2023, 14:22:22) to 29,710,983 (March 24th, 2024, 00:00:00)
@@ -34,7 +41,6 @@ The dataset is organized into multiple subfiles in Parquet format, structured to
   - Filtered transfer events excluding ZKsync fees: 704,720,525
 - **Unique wallet addresses:** 7,322,502
 
-You can download the full dataset from our data portal at [https://data.zksync.dev](https://data.zksync.dev). The dataset description and schema are available in the [./data/](https://github.com/matter-labs/zksync-data-dump/tree/main/data) directory. Jupyter notebooks for quick exploration and analysis are provided in the [./notebooks/](https://github.com/matter-labs/zksync-data-dump/tree/main/notebooks) directory. For loading and processing the data, we recommend using the [Polars](https://github.com/pola-rs/polars) library.
 
 ### Data Attributes
 
@@ -56,7 +62,8 @@ These logs facilitate communication between ZKsync Layer 2 and Ethereum Layer 1,
 ## What's New
 
 - Initial version of the code and analysis
-- Paper is avaialble at [paper-data-strategy-for-zksync.pdf](paper-data-strategy-for-zksync.pdf). 
+- Paper is avaialble at [paper-data-strategy-for-zksync.pdf](paper-data-strategy-for-zksync.pdf)
+- Paper is available on ArXiv at [https://arxiv.org/abs/2407.18699](https://arxiv.org/abs/2407.18699)
   
 
 ## Ask a Question
@@ -68,11 +75,13 @@ These logs facilitate communication between ZKsync Layer 2 and Ethereum Layer 1,
 If you find this work useful, please consider citing our academic paper:
 
 ```
-@inproceedings{Silva@2024,
-  author = {Maria In{\^e}s Silva and Johnnatan Messias and Benjamin Livshits},
-  title = {{A Public Dataset For the ZKsync Rollup}},
-  booktitle = {ArXiv},
-  month = {July},
-  year = {2024}
+@misc{silva2024publicdatasetzksyncrollup,
+      title={A Public Dataset For the ZKsync Rollup}, 
+      author={Maria In{\^e}s Silva and Johnnatan Messias and Benjamin Livshits},
+      year={2024},
+      eprint={2407.18699},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2407.18699}, 
 }
 ```
